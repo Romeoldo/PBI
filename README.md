@@ -25,6 +25,12 @@ WHERE
 
 ## Steps to Implement in Power BI
 
+graph TB
+  DB["Database"] -- "Executes Query" --> Q["Query"]
+  Q -- "Loads Data" --> DM["Power BI Data Model"]
+  DM -- "Applies Filter" --> F["Power BI Filter"]
+  F -- "Returns Results" --> V["Power BI Visualization"]
+
 1. **Connect to Database:**
     - Open Power BI Desktop.
     - Click on `Home` > `Get Data` > `SQL Server`.
