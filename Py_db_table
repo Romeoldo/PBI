@@ -1,0 +1,20 @@
+import pandas as pd
+from datetime import datetime
+
+# Simulate the database table data
+data = {
+    "Date": pd.date_range(start="2021-05-01", end=datetime.now(), freq="M")
+}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Apply the query logic to the DataFrame
+df['Month Code'] = df['Date'].dt.year.astype(str) + df['Date'].dt.month.astype(str)
+df['Month'] = df.apply(lambda x: 'Current Month Data' if x['Date'].month == datetime.now().month and x['Date'].year == datetime.now().year else x['Date'].strftime('%B %Y'), axis=1)
+df['QuarterCode'] = df['Date'].dt.year.astype(str) + df['Date'].dt.quarter.astype(str)
+df['Quarter'] = df.apply(lambda x: 'Current Quarter Data' if x['Date'].year == datetime.now().year and x['Date'].quarter == pd.Timestamp(datetime.now()).quarter else f"{x['Date'].year} Q{x['Date'].quarter}", axis=1)
+
+import ace_tools as tools; tools.display_dataframe_to_user(name="Date Intervals Report", dataframe=df)
+
+df.head()
